@@ -1,4 +1,3 @@
-'use client'
 import CardComp from "@/components/card";
 import { useEffect, useState } from "react";
 import { createClient, Entry } from "contentful";
@@ -8,8 +7,15 @@ const client = createClient({
   accessToken: 'rZ0NDFYyNPT-Y9FbDXWQ-h3e6c8aNuZhvitJKB-KR9o'
 });
 
+interface ContentfulFile {
+  contentType: string;
+  details: object;
+  fileName: string;
+  url: string;
+}
+
 interface CardData {
-    heading: string;
+	heading: string;
 	description: {
 		content: [
 			{
@@ -21,76 +27,50 @@ interface CardData {
 			}
 		]
 	};
-	thumbnail: {
-		description: string;
-		fields: {
-			file: {
-				contentType: string;
-				details: object;
-				fileName: string;
-				url: string
-			}
-		}
-	};
-	backgroundImage: {
-		description: string;
-		fields: {
-			file: {
-				contentType: string;
-				details: object;
-				fileName: string;
-				url: string
-			}
-		}
-	};
+	thumbnail: { description: string; fields: { file: ContentfulFile } };
+	backgroundImage: { description: string; fields: { file: ContentfulFile } };
 }
 
 interface ResField {
-    fields: CardData;
-    sys: {
-        id: string;
-    };
-}
-
-interface res {
-	items: ResField[];
+  fields: CardData;
+  sys: { id: string };
 }
 
 function HomePage() {
-    const [cards, setCards] = useState<ResField[]>([]);
-  
-    useEffect(() => {
-        const getCardData = async () => {
-            try {
-                const response: any = await client.getEntries();
-				if (response.items) {
-                    setCards(response.items);
-                }
-            } catch (error) {
-                console.error('Error fetching entire Contentful collection:', error);
-            }
-        };
+  const [cards, setCards] = useState<ResField[]>([]);
 
-        getCardData();
-    }, []);
+  useEffect(() => {
+    const getCardData = async () => {
+      try {
+        const response: any = await client.getEntries();
+        if (response.items) {
+          setCards(response.items);
+        }
+      } catch (error) {
+        console.error('Error fetching entire Contentful collection:', error);
+      }
+    };
 
-    return (
-        <main className="w-screen p-8 md:p-14 lg:p-18 xl:p-20">
-            <h1 className="text-2xl font-sans font-extrabold mb-7">Best Sellers</h1>
-            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {cards.map((card, index) => (
-                    <CardComp
-                        key={index}
-                        heading={card.fields.heading}
-                        description={card.fields.description.content[0].content}
-                        thumbnail={card.fields.thumbnail.fields.file.url}
-						backgroundImage={card?.fields?.backgroundImage?.fields?.file.url}
-						id={card.sys.id}
-                    />
-                ))}
-            </section>
-        </main>
-    );
+    getCardData();
+  }, []);
+
+  return (
+    <main className="w-screen p-8 md:p-14 lg:p-18 xl:p-20">
+      <h1 className="text-2xl font-sans font-extrabold mb-7">Best Sellers</h1>
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {cards.map((card, index) => (
+          <CardComp
+            key={index}
+            heading={card.fields.heading}
+			description={card.fields.description.content[0].content}
+            thumbnail={card.fields.thumbnail.fields.file.url}
+            backgroundImage={card.fields.backgroundImage?.fields.file.url}
+            id={card.sys.id}
+          />
+        ))}
+      </section>
+    </main>
+  );
 }
 
 export default HomePage;

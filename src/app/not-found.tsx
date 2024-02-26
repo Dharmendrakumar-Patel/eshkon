@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
@@ -12,6 +11,7 @@ interface MemeData {
 const NotFound: React.FC = () => {
   const [meme, setMeme] = useState<MemeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRandomMeme = async () => {
@@ -26,6 +26,7 @@ const NotFound: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching meme:', error);
+        setError('Failed to load meme.');
       } finally {
         setLoading(false);
       }
@@ -36,16 +37,14 @@ const NotFound: React.FC = () => {
 
   return (
     <div className='w-screen h-nav flex flex-col items-center justify-center min-w-[300px] p-5'>
-        <h2 className="text-2xl mb-4 font-sans font-semibold">404 - Not Found</h2>
-        {loading ? (
-          <p>Loading meme...</p>
-        ) : meme ? (
-          <div>
-            <Image src={meme.url} alt="Random Meme" width={500} height={500} className="rounded-lg" />
-          </div>
-        ) : (
-          <p>Failed to load meme.</p>
-        )}
+      <h2 className="text-2xl mb-4 font-sans font-semibold">404 - Not Found</h2>
+      {loading && <p>Loading meme...</p>}
+      {error && <p>{error}</p>}
+      {meme && (
+        <div>
+          <Image src={meme.url} alt="Random Meme" width={500} height={500} className="rounded-lg" loading="lazy" />
+        </div>
+      )}
     </div>
   );
 };
