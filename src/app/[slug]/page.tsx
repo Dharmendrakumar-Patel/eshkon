@@ -40,7 +40,7 @@ export default function CardPage({ params }: { params: { slug: string } }) {
   return (
     <>
       {cardDetail && (
-        <main className="w-screen p-8 md:p-14 lg:p-18 xl:p-20">
+        <main className="w-full h-nav p-8 md:p-14 lg:p-18 xl:p-20">
           <h1 className="mb-4 text-2xl font-bold">{cardDetail.heading}</h1>
           <div className="flex w-full items-center justify-center mb-7">
             {cardDetail.backgroundImage?.fields?.file.url && (

@@ -36,7 +36,7 @@ const NotFound: React.FC = () => {
   }, []);
 
   return (
-    <div className='w-screen h-nav flex flex-col items-center justify-center min-w-[300px] p-5'>
+    <div className='w-full h-nav flex flex-col items-center justify-center min-w-[300px] p-5'>
       <h2 className="text-2xl mb-4 font-sans font-semibold">404 - Not Found</h2>
       {loading && <p>Loading meme...</p>}
       {error && <p>{error}</p>}
