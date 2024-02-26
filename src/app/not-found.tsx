@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 interface MemeData {
   id: string;
@@ -40,7 +41,7 @@ const NotFound: React.FC = () => {
           <p>Loading meme...</p>
         ) : meme ? (
           <div>
-            <img src={meme.url} alt="Random Meme" width={500} height={500} className="rounded-lg" />
+            <Image src={meme.url} alt="Random Meme" width={500} height={500} className="rounded-lg" />
           </div>
         ) : (
           <p>Failed to load meme.</p>
