@@ -33,7 +33,8 @@ function CardComp(props: cardData) {
                     props.description.map((text, index) => {
                         return (
                             <>
-                                <CardDescription key={index} className='indent-1 mb-2 text-left'>{text.value}</CardDescription>
+                                <CardDescription key={index} className='indent-1 text-left'>{text.value}</CardDescription>
+                                <br />
                             </>
                         )
                     })

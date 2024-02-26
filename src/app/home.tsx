@@ -1,3 +1,4 @@
+'use client'
 import CardComp from "@/components/card";
 import { useEffect, useState } from "react";
 import { createClient, Entry } from "contentful";
