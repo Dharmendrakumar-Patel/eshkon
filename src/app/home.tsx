@@ -55,20 +55,20 @@ function HomePage() {
   }, []);
 
   return (
-    <main className="w-screen p-8 md:p-14 lg:p-18 xl:p-20">
-      <h1 className="text-2xl font-sans font-extrabold mb-7">Best Sellers</h1>
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {cards.map((card, index) => (
-          <CardComp
-            key={index}
-            heading={card.fields.heading}
-			description={card.fields.description.content[0].content}
-            thumbnail={card.fields.thumbnail.fields.file.url}
-            backgroundImage={card.fields.backgroundImage?.fields.file.url}
-            id={card.sys.id}
-          />
-        ))}
-      </section>
+    <main className="w-full">
+        <h1 className="text-2xl font-sans font-extrabold mb-7">Best Sellers</h1>
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {cards.map((card, index) => (
+            <CardComp
+              key={index}
+              heading={card.fields.heading}
+              description={card.fields.description.content[0].content}
+              thumbnail={card.fields.thumbnail.fields.file.url}
+              backgroundImage={card.fields.backgroundImage?.fields.file.url}
+              id={card.sys.id}
+            />
+          ))}
+        </section>
     </main>
   );
 }
